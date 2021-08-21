@@ -44,7 +44,7 @@ J2.color("violet")
 J2.penup()
 J2.goto(350,0)
 J2.shapesize(stretch_wid=8,stretch_len=1)
-
+J2.dy = 0
 
 #Pelota
 pelota = turtle.Turtle()
@@ -89,41 +89,32 @@ def J1_down():
         y = -220
     J1.sety(y)
     
-def J2_up():
-    y = J2.ycor()
-    y +=20
-    if y > 220:
-        y = 220
-    J2.sety(y)
-def J2_down():
-    y = J2.ycor()
-    y -=20
-    if y < -220:
-        y = -220
-    J2.sety(y)
     
 #Teclado
 window.listen()
 window.onkeypress(J1_up, "w")
 window.onkeypress(J1_down, "s")
-window.onkeypress(J2_up, "Up")
-window.onkeypress(J2_down, "Down")
-
 
 while True:
     window.update()
     
     pelota.setx(pelota.xcor() + pelota.dx)
     pelota.sety(pelota.ycor() + pelota.dy)
-    
+    J2.sety(J2.ycor() + J2.dy)
     #Bordes
     if pelota.ycor() > 290:
         pelota.dy *= -1
         
     if pelota.ycor() < -290:
         pelota.dy *= -1
-        
     
+    if pelota.dx > 0:
+        J2.dy = pelota.dy
+    
+    if pelota.ycor() > 0 > J2.ycor():
+        J2.dy = 0
+    
+
     if pelota.xcor() > 390:
         pelota.goto(0,0)
         pelota.dx *= -1
@@ -136,7 +127,11 @@ while True:
         Marc2 += 1
         Marc.clear()
         Marc.write("Jugador 1: {}        Jugador 2: {}".format(Marc1,Marc2), align="center", font=("Courier",24,"normal"))
-        
+     
+    if J2.ycor() > 220:
+        J2.sety(220)
+    if J2.ycor() < -220:
+        J2.sety(-220)
     
     if ((pelota.xcor() > 340 and pelota.xcor() < 350)
             and (pelota.ycor() < J2.ycor() + 80 
