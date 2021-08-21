@@ -122,6 +122,7 @@ while True:
         
     if pelota.ycor() < -290:
         pelota.dy *= -1
+        
     
     if pelota.xcor() > 390:
         pelota.goto(0,0)
