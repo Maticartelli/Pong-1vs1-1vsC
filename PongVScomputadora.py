@@ -12,21 +12,6 @@ window.bgcolor("black")
 window.setup(width=800 , height=600)
 window.tracer(0)
 
-#Creamos el lobby
-#Titulo = turtle.Turtle()
-#Titulo.speed(0)
-#Titulo.color("Pink")
-#Titulo.penup()
-#Titulo.goto(0,160)
-#Titulo.write("Pong, the game", align="center", font=("Courier",24,"normal"))
-
-#Text = turtle.Turtle()
-#Text.speed(0)
-#Text.color("Pink")
-#Text.penup()
-#Text.goto(0,60)
-#Text.write("Press 'Y' to start", align="center", font=("Courier",24,"normal"))
-
 #Jugador uno
 J1 = turtle.Turtle()
 J1.speed(0)
@@ -72,9 +57,10 @@ Marc.hideturtle()
 Marc.goto(0,260)
 Marc.write("Jugador 1: 0        Computadora: 0", align="center", font=("Courier",24,"normal"))
 
-#
+#Variables de los puntos
 Marc1 = 0
 Marc2 = 0
+
 #Movimientos
 def J1_up():
     y = J1.ycor()
@@ -90,7 +76,7 @@ def J1_down():
     J1.sety(y)
     
     
-#Teclado
+#Teclado y movimientos
 window.listen()
 window.onkeypress(J1_up, "w")
 window.onkeypress(J1_down, "s")
@@ -98,23 +84,26 @@ window.onkeypress(J1_down, "s")
 while True:
     window.update()
     
+    #Movimiento de la pelota y la computadora
     pelota.setx(pelota.xcor() + pelota.dx)
     pelota.sety(pelota.ycor() + pelota.dy)
     J2.sety(J2.ycor() + J2.dy)
-    #Bordes
+    
+    #Respetamos los Bordes
     if pelota.ycor() > 290:
         pelota.dy *= -1
         
     if pelota.ycor() < -290:
         pelota.dy *= -1
     
+    #Ponemos la trayectoria de la computadora para que siga la pelota en la dirección "y". (Esto puede mejorarse)
     if pelota.dx > 0:
         J2.dy = pelota.dy
     
     if pelota.ycor() > 0 > J2.ycor():
         J2.dy = 0
     
-
+    #Ponemos la condición de gol
     if pelota.xcor() > 390:
         pelota.goto(0,0)
         pelota.dx *= -1
@@ -127,12 +116,14 @@ while True:
         Marc2 += 1
         Marc.clear()
         Marc.write("Jugador 1: {}        Computadora: {}".format(Marc1,Marc2), align="center", font=("Courier",24,"normal"))
-     
+    
+    #Pedimos que la computadora respete los bordes
     if J2.ycor() > 220:
         J2.sety(220)
     if J2.ycor() < -220:
         J2.sety(-220)
     
+    # Ponemos la colisión de la pelota con los jugadores
     if ((pelota.xcor() > 340 and pelota.xcor() < 350)
             and (pelota.ycor() < J2.ycor() + 80 
                  and pelota.ycor() > J2.ycor()-80)):
