@@ -1,5 +1,7 @@
 import turtle
 
+
+
 #Creamos la ventana para el juego
 window = turtle.Screen()
 #Ponemos el título
@@ -9,6 +11,21 @@ window.bgcolor("black")
 #Las dimensiones
 window.setup(width=800 , height=600)
 window.tracer(0)
+
+#Creamos el lobby
+#Titulo = turtle.Turtle()
+#Titulo.speed(0)
+#Titulo.color("Pink")
+#Titulo.penup()
+#Titulo.goto(0,160)
+#Titulo.write("Pong, the game", align="center", font=("Courier",24,"normal"))
+
+#Text = turtle.Turtle()
+#Text.speed(0)
+#Text.color("Pink")
+#Text.penup()
+#Text.goto(0,60)
+#Text.write("Press 'Y' to start", align="center", font=("Courier",24,"normal"))
 
 #Jugador uno
 J1 = turtle.Turtle()
@@ -62,19 +79,27 @@ Marc2 = 0
 def J1_up():
     y = J1.ycor()
     y +=20
+    if y > 220:
+        y = 220
     J1.sety(y)
 def J1_down():
     y = J1.ycor()
     y -=20
+    if y < -220:
+        y = -220
     J1.sety(y)
     
 def J2_up():
     y = J2.ycor()
     y +=20
+    if y > 220:
+        y = 220
     J2.sety(y)
 def J2_down():
     y = J2.ycor()
     y -=20
+    if y < -220:
+        y = -220
     J2.sety(y)
     
 #Teclado
@@ -110,6 +135,8 @@ while True:
         Marc2 += 1
         Marc.clear()
         Marc.write("Jugador 1: {}        Jugador 2: {}".format(Marc1,Marc2), align="center", font=("Courier",24,"normal"))
+        
+    
     if ((pelota.xcor() > 340 and pelota.xcor() < 350)
             and (pelota.ycor() < J2.ycor() + 80 
                  and pelota.ycor() > J2.ycor()-80)):
