@@ -12,20 +12,6 @@ window.bgcolor("black")
 window.setup(width=800 , height=600)
 window.tracer(0)
 
-#Creamos el lobby
-#Titulo = turtle.Turtle()
-#Titulo.speed(0)
-#Titulo.color("Pink")
-#Titulo.penup()
-#Titulo.goto(0,160)
-#Titulo.write("Pong, the game", align="center", font=("Courier",24,"normal"))
-
-#Text = turtle.Turtle()
-#Text.speed(0)
-#Text.color("Pink")
-#Text.penup()
-#Text.goto(0,60)
-#Text.write("Press 'Y' to start", align="center", font=("Courier",24,"normal"))
 
 #Jugador uno
 J1 = turtle.Turtle()
@@ -62,8 +48,7 @@ division.color("red")
 division.goto(0,400)
 division.goto(0,-400)
 
-#Marcador
-
+#Marcador de puntos
 Marc = turtle.Turtle()
 Marc.speed(0)
 Marc.color("blue")
@@ -72,9 +57,10 @@ Marc.hideturtle()
 Marc.goto(0,260)
 Marc.write("Jugador 1: 0        Jugador 2: 0", align="center", font=("Courier",24,"normal"))
 
-#
+#La variable de puntos para cada jugador
 Marc1 = 0
 Marc2 = 0
+
 #Movimientos
 def J1_up():
     y = J1.ycor()
@@ -102,17 +88,18 @@ def J2_down():
         y = -220
     J2.sety(y)
     
-#Teclado
+#Teclado y movimientos
 window.listen()
 window.onkeypress(J1_up, "w")
 window.onkeypress(J1_down, "s")
 window.onkeypress(J2_up, "Up")
 window.onkeypress(J2_down, "Down")
 
-
+#Funcionamiento del juego
 while True:
     window.update()
     
+    #Movimiento de la pelota
     pelota.setx(pelota.xcor() + pelota.dx)
     pelota.sety(pelota.ycor() + pelota.dy)
     
@@ -123,6 +110,7 @@ while True:
     if pelota.ycor() < -290:
         pelota.dy *= -1
     
+    #Creamos la condición de gol y la ganancia de puntos
     if pelota.xcor() > 390:
         pelota.goto(0,0)
         pelota.dx *= -1
@@ -136,7 +124,7 @@ while True:
         Marc.clear()
         Marc.write("Jugador 1: {}        Jugador 2: {}".format(Marc1,Marc2), align="center", font=("Courier",24,"normal"))
         
-    
+    #Creamos la colisión de la pelota con los jugadores
     if ((pelota.xcor() > 340 and pelota.xcor() < 350)
             and (pelota.ycor() < J2.ycor() + 80 
                  and pelota.ycor() > J2.ycor()-80)):
